@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration and Login Form</title>
+<link rel="icon" type="image/png" href="bg.jpg">
+<style>
+    /* styles.css */
+body {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url('bg.jpg');
+background-size: cover;
+background-position: center;
+height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 400px;
+    background: #fff;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    color: #333;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+h2 {
+    text-align: center;
+    color: #007BFF;
+}
+
+#registration-container, #login-container {
+    display: block;
+}
+
+#success-message {
+    display: none;
+}
+
+</style>
+</head>
+<body>
+    <div class="container" id="registration-container">
+        <h2>Registration Form</h2>
+        <form id="registration-form">
+            <div class="form-group">
+                <label for="reg-username">Username:</label>
+                <input type="text" id="reg-username" name="reg-username" required>
+            </div>
+            <div class="form-group">
+                <label for="reg-email">Email:</label>
+                <input type="email" id="reg-email" name="reg-email" required>
+            </div>
+            <div class="form-group">
+                <label for="reg-password">Password:</label>
+                <input type="password" id="reg-password" name="reg-password" required>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <div class="container" id="login-container" style="display: none;">
+        <h2>Login</h2>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="login-username">Username:</label>
+                <input type="text" id="login-username" name="login-username" required>
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" name="login-password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <div id="success-message" style="display: none;">
+        <h2>Welcome, <span id="logged-in-username"></span>!</h2>
+    </div>
+
+    <script>
+        const registrationForm = document.getElementById("registration-form");
+        const loginForm = document.getElementById("login-form");
+        const registrationContainer = document.getElementById("registration-container");
+        const loginContainer = document.getElementById("login-container");
+        const successMessage = document.getElementById("success-message");
+        const loggedInUsername = document.getElementById("logged-in-username");
+
+        let users = [];
+
+        registrationForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const username = document.getElementById("reg-username").value;
+            const email = document.getElementById("reg-email").value;
+            const password = document.getElementById("reg-password").value;
+
+            // You can add registration logic here, for example, store the user in an array.
+            users.push({ username, email, password });
+
+            // Show the login form after successful registration
+            registrationContainer.style.display = "none";
+            loginContainer.style.display = "block";
+        });
+
+        loginForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const username = document.getElementById("login-username").value;
+            const password = document.getElementById("login-password").value;
+
+            // You can add authentication and login logic here
+            const user = users.find(u => u.username === username && u.password === password);
+
+            if (user) {
+                // Hide the login form and display a success message
+                loginContainer.style.display = "none";
+                successMessage.style.display = "block";
+                loggedInUsername.textContent = user.username;
+            } else {
+                alert("Login failed. Please check your credentials.");
+            }
+        });
+    </script>
+</body>
+</html>
